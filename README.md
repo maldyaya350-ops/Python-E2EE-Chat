@@ -1,57 +1,276 @@
-# 🕵️‍♂️ G.I.D Secure Terminal
-
-![Project Banner](https://img.shields.io/badge/Security-Level%205-red?style=for-the-badge)
-![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
-![Encryption](https://img.shields.io/badge/Encryption-RSA%20%2B%20AES-green?style=for-the-badge)
-
-> **"Turn your terminal into a Hollywood-style, military-grade encrypted communication channel."**
-
-**G.I.D Secure Terminal** is a Python-based chat application that combines a cinematic **Cyberpunk/Matrix interface** with real-world **End-to-End Encryption (E2EE)** using RSA-2048 and AES standards.
+# G.I.D SECURE MESSAGING SYSTEM
+## نظام المراسلة الآمن
 
 ---
 
-## 📺 As Seen on YouTube
-This project was built live! Watch the full tutorial here:
-[![YouTube](https://img.shields.io/badge/YouTube-Watch%20Now-red?style=for-the-badge&logo=youtube)](https://youtu.be/sRpcmGFPoj0)
+##  نبذة عن البرنامج
 
-**Watch the full video:** [https://youtu.be/sRpcmGFPoj0](https://youtu.be/sRpcmGFPoj0)
+برنامج **G.I.D** هو نظام مراسلة آمن مشفر بالكامل يستخدم تقنية **RSA-2048** للتشفير. يوفر البرنامج حماية عالية للبيانات من خلال المصادقة الثنائية وبروتوكولات الأمان المتقدمة.
 
----
-
-## ⚡ Features
-
-### 🖥️ The Interface (UI)
-- **Matrix Rain Boot Sequence:** A cinematic start-up effect.
-- **Security Protocol Puzzle:** A binary matrix authentication puzzle (Parity Bit Logic) required to access the system.
-- **Responsive Design:** Automatically centers text based on your terminal width.
-- **Visual Feedback:** Color-coded logs (Green for success, Red for danger, Yellow for processing).
-
-### 🔒 The Security (Cryptography)
-- **Hybrid Encryption:** Uses **AES** for message encryption and **RSA-2048** for key exchange.
-- **End-to-End Encryption (E2EE):** The server **cannot** read messages. It only routes encrypted blobs.
-- **Dynamic Key Generation:** New RSA keys are generated in RAM every time the client starts.
-- **Public Key Infrastructure:** Agents register their public keys with the server upon connection.
-
-### 📡 The Network
-- **Socket Programming:** Built from scratch using Python's `socket` and `threading`.
-- **Offline Messaging (Store & Forward):** If the target agent is offline, the server stores encrypted messages and delivers them instantly upon reconnection.
-- **Multi-Client Support:** The server handles multiple agents simultaneously.
+**الميزات الرئيسية:**
+-  تشفير end-to-end (E2EE)
+-  مصادقة قوية مع كلمات مرور محمية
+-  سجل شامل للأحداث
+-  واجهة سهلة الاستخدام
+-  نظام أوامر متقدم
 
 ---
 
-## 📦 Requirements & Installation
+##  البدء السريع
 
-You need to install the following external Python libraries to run the project:
+### المتطلبات:
+```
+Python 3.8+
+colorama
+cryptography
+```
 
-| Library | Purpose |
-| :--- | :--- |
-| `cryptography` | Handles RSA & AES encryption standards. |
-| `colorama` | Creates the Matrix-style colored terminal interface. |
+### التثبيت:
+```bash
+pip install colorama cryptography
+```
 
-### 🛠️ Quick Setup
+### تشغيل السيرفر:
+```bash
+python server.py
+```
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/ahmedfox1/Python-E2EE-Hacker-Chat.git
-   cd GID-Secure-Terminal
-   pip install cryptography colorama
+### تشغيل العميل:
+```bash
+python client.py
+```
+
+---
+
+##  نظام المصادقة
+
+### للمستخدم الجديد:
+1. إدخال معرّف وكيل فريد (Agent ID)
+2. حل **بروتوكول الأمان**: مصفوفة أرقام ثنائية
+3. إنشاء كلمة مرور قوية (6 أحرف على الأقل)
+4. تأكيد كلمة المرور
+
+### للمستخدم الموجود:
+1. إدخال معرّف الوكيل
+2. إدخال كلمة المرور
+3. الوصول الفوري للنظام
+
+---
+
+##  بروتوكول التحقق الأمني
+
+عند التسجيل الأول، يجب حل **مصفوفة الأرقام الثنائية**:
+
+**الطريقة:**
+- عد عدد الـ 1s في كل عمود
+- إذا كان العدد **فردي** → الرقم **1**
+- إذا كان العدد **زوجي** → الرقم **0**
+
+**مثال:**
+```
+       C1  C2  C3  C4  C5  C6  C7  C8
+       --  --  --  --  --  --  --  --
+ROW 1 | 1   0   1   1   1   1   1   0
+ROW 2 | 0   0   0   0   1   0   0   0
+ROW 3 | 1   0   1   0   0   1   1   1
+ROW 4 | 1   1   0   1   1   1   1   1
+ROW 5 | 1   0   1   1   0   1   0   1
+ROW 6 | 1   1   1   1   0   1   1   1
+ROW 7 | 1   1   1   0   1   1   1   1
+ROW 8 | 0   0   1   1   0   1   0   1
+
+النتيجة: 01010110 (تحسب العمود تلو الآخر)
+```
+
+---
+
+##  نظام الرسائل
+
+### إرسال رسالة:
+1. إدخال معرّف الوكيل المستقبل
+2. كتابة الرسالة
+3. الضغط على Enter
+4. تلقي تأكيد الإرسال
+
+### الرسائل المشفرة:
+- كل رسالة تُشفر بـ **RSA-2048**
+- ثم بـ **Fernet (AES-128)**
+- فقط المستقبل يمكنه قراءة الرسالة
+
+---
+
+##  قائمة الأوامر
+
+اكتب أي من الأوامر التالية أثناء المحادثة:
+
+| الأمر | الوصف |
+|--------|--------|
+| `help` | عرض قائمة الأوامر |
+| `exit` | قطع الاتصال والخروج |
+| `status` | عرض حالة الاتصال |
+| `info` | معلومات الاتصال الحالي |
+| `history` | عرض آخر 10 رسائل |
+| `profile` | عرض بيانات حسابك |
+| `settings` | إعدادات النظام |
+| `clear` | مسح الشاشة |
+
+---
+
+##  ملفات البيانات
+
+### `agents_credentials.json`
+يحتوي على:
+- معرّفات المستخدمين
+- كلمات المرور المشفرة
+- تاريخ التسجيل
+- تاريخ آخر دخول
+- محاولات الفشل
+
+**مثال:**
+```json
+{
+  "malik": {
+    "password": "شيفر_sha256",
+    "created_at": "2026-01-31 15:30:00",
+    "last_login": "2026-01-31 16:45:00",
+    "failed_attempts": 0
+  }
+}
+```
+
+### `system_logs.json`
+يسجل جميع الأحداث:
+- تسجيل الدخول والخروج
+- إرسال واستقبال الرسائل
+- الأخطاء
+- محاولات الفشل
+
+**مثال:**
+```json
+{
+  "timestamp": "2026-01-31 16:45:00",
+  "agent_id": "malik",
+  "event_type": "LOGIN",
+  "details": "Successful login"
+}
+```
+
+---
+
+##  معايير الأمان
+
+### تشفير المفاتيح:
+- **RSA-2048**: لتبادل المفاتيح الآمن
+- **Fernet (AES-128)**: لتشفير الرسائل
+- **SHA-256**: لتشفير كلمات المرور
+
+### حماية كلمات المرور:
+- تخزين بصمة SHA-256 فقط
+- كلمة المرور الأصلية لا تُحفظ
+- 3 محاولات فاشلة ثم الرفض
+
+### سجل الأحداث:
+- تتبع كل عملية تسجيل دخول
+- تسجيل جميع الرسائل المرسلة
+- تسجيل الأخطاء والاستثناءات
+
+---
+
+##  تحديثات البرنامج
+
+### الإصدار 2.0 (آخر تحديث)
+-  نظام أوامر متقدم
+-  سجل شامل للأحداث
+-  تحسينات الواجهة الرسومية
+-  حفظ بيانات المستخدمين المتقدمة
+-  سجل الرسائل والمحادثات
+-  ملف المستخدم الشخصي
+-  إعدادات النظام القابلة للعرض
+
+### الإصدار 1.0 (الأساس)
+- المراسلة الأساسية
+- التشفير RSA-2048
+- المصادقة البسيطة
+
+---
+
+##  استكشاف الأخطاء
+
+### المشكلة: "SERVER UNREACHABLE"
+**الحل:**
+- تأكد من تشغيل السيرفر
+- تحقق من IP والمنفذ (127.0.0.1:5555)
+
+### المشكلة: "AGENT NOT REGISTERED"
+**الحل:**
+- المستقبل يجب أن يسجل دخوله مرة واحدة أولاً
+
+### المشكلة: "ACCESS DENIED"
+**الحل:**
+- تحقق من كلمة المرور
+- لديك 3 محاولات فقط
+
+### المشكلة: كلمة مرور مرفوضة
+**الحل:**
+- يجب أن تكون 6 أحرف على الأقل
+- يجب أن تتطابق عند التأكيد
+
+---
+
+##  معلومات الاتصال
+
+**Server IP:** 127.0.0.1
+**Server Port:** 5555
+**Encryption:** RSA-2048 + Fernet
+**Protocol:** E2EE (End-to-End Encrypted)
+
+---
+
+##  متطلبات النظام
+
+- **نظام التشغيل:** Windows / Linux / macOS
+- **Python:** 3.8 أو أحدث
+- **RAM:** 512 MB على الأقل
+- **المساحة:** 50 MB على الأقل
+
+---
+
+##  ملاحظات مهمة
+
+1. **لا تشارك كلمتك السرية** مع أحد
+2. **حافظ على النسخ الاحتياطية** من `agents_credentials.json`
+3. **السجلات تُحفظ تلقائياً** في `system_logs.json`
+4. **الرسائل مشفرة بالكامل** - لا أحد يستطيع قراءتها غيرك والمستقبل
+5. **كل تسجيل دخول مُسجّل** في نظام السجلات
+
+---
+
+##  الميزات المستقبلية المخطط لها
+
+- [ ] إرسال الملفات والوسائط
+- [ ] المحادثات الجماعية
+- [ ] قائمة الأصدقاء والمفضلين
+- [ ] البحث في سجل الرسائل
+- [ ] تغيير كلمة المرور
+- [ ] حذف الحسابات
+- [ ] إشعارات في الوقت الفعلي
+- [ ] واجهة رسومية (GUI)
+
+---
+
+##  الترخيص
+
+هذا البرنامج متاح للاستخدام الشخصي والتعليمي.
+
+---
+
+##  شكر وتقدير
+
+شكراً لاستخدامك **G.I.D Secure Messaging System**.
+
+---
+
+**آخر تحديث:** 31 يناير 2026
+**الإصدار:** 2.0
+**الحالة:** مستقر وجاهز للاستخدام
+
